@@ -1,0 +1,52 @@
+@use "../../styles/shared.scss" as shared;
+
+
+.coin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+    padding: 1.5em;
+    border: 1px solid #f8f4f4;
+    border-radius: 5px;
+
+    :hover {
+      cursor: pointer;
+    }
+  }
+  
+.selector {
+  display: flex;
+  align-items: center;
+
+  * {
+    margin-left: 1rem;
+  }
+}
+
+.background {
+    position: absolute;
+    top:0%;
+    left:0%;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #80808080;
+}
+
+.modal {
+    width: 20rem;
+    height: 70rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #f8f4f4;
+    scrollbar-width: none;
+
+    ::-webkit-scrollbar { 
+      width: 0;
+      height: 0;
+    }
+}

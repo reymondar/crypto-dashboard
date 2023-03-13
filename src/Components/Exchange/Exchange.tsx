@@ -1,11 +1,14 @@
 import Image from "next/image";
-import { SearchBar } from "../SearchBar/SearchBar";
+import { Selector } from "../Selector/Selector";
 import style from "./Exchange.module.scss";
-type ExchangeProps = {
-  coin: string;
-};
 
-export const Exchange = ({ coin }: ExchangeProps) => {
+export const Exchange = () => {
+
+
+  const handleClick = () => {
+
+  }
+
   return (
     <div className={style.container}>
       <div className={style.title}>
@@ -17,24 +20,14 @@ export const Exchange = ({ coin }: ExchangeProps) => {
       </div>
       <div className={`${style.selector} ${style.from}`}>
         <h1>From</h1>
-        <div className={style.coin}>
-          <select>
-            <option value="BTC">BTC</option>
-          </select>
-          <p>0.5433</p>
-        </div>
+        <Selector />
       </div>
       <div className={style.image}>
-        <Image src="/repeat.png" alt="change" width={25} height={25} />
+        <Image src="/repeat.png" alt="change" width={25} height={25} onClick={handleClick}/>
       </div>
       <div className={`${style.selector} ${style.to}`}>
         <h1>To</h1>
-        <div className={style.coin}>
-          <select>
-            <option value="BTC">BTC</option>
-          </select>
-          <p>0.5433</p>
-        </div>
+        <Selector />
       </div>
       <div className={style.submit}>
         <p>1BTC = $22,741.01</p>

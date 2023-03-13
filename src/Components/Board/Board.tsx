@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { LineChart } from "../Charts/LineChart";
 import styles from "./Board.module.scss";
-
+import { Loader } from "@/Loader/Loader";
 type Coin = {
   price?: string;
 };
@@ -36,7 +36,13 @@ export const Board = ({ coin }: CoinProps) => {
   const coinQuery = useQuery(["coin", coin], fetchCoin);
   const graphQuery = useQuery(["graph", coin], fetchGraph);
 
-  if (coinQuery.isLoading || graphQuery.isLoading) return <h1>Loading...</h1>;
+  if (coinQuery.isLoading || graphQuery.isLoading) {
+    return (
+      <div className={styles.container}>
+        <Loader />
+      </div>
+    );
+  }
 
   if (coinQuery.isError || graphQuery.isError)
     return <h1>an error has ocurred</h1>;

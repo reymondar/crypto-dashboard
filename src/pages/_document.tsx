@@ -6,14 +6,14 @@ export default function Document() {
       <Head>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://www.cdnfonts.com" />
         <link
           crossOrigin="anonymous"
           rel="preconnect"
-          href="https://fonts.gstatic.com"
+          href="https://fonts.cdnfonts.com"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Unbounded:wght@300;400;500;600&display=swap"
+          href="https://fonts.cdnfonts.com/css/uni-neue"
           rel="stylesheet"
         />
       </Head>

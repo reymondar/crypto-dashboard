@@ -1,4 +1,7 @@
 import { useState, useContext } from "react";
+import { coinContext } from "../dashboard/Dashboard";
+import Image from "next/image";
+import style from "./Input.module.scss";
 
 type Coins = {
   id: string;
@@ -6,10 +9,11 @@ type Coins = {
 };
 
 type InputPros = {
-  handleClick: (e: string) => void;
+  handleClick?: (e: string) => void;
 };
 
 export const Input = ({ handleClick }: InputPros) => {
+  
   const coinDB = useContext(coinContext);
 
   //User search
@@ -20,7 +24,7 @@ export const Input = ({ handleClick }: InputPros) => {
   const [coinSearch, setCoinSearch] = useState([]);
 
   const handleChange = (e) => {
-    let typed: string = e.target.value.toLowerCase().join("");
+    let typed: string = e.target.value.toLowerCase().trim();
     setSearch(typed);
     setCoinSearch(coinDB.filter((coin) => coin.id.includes(typed)));
   };
@@ -28,7 +32,9 @@ export const Input = ({ handleClick }: InputPros) => {
   const handleFocus = () => setIsOpen((prev) => !prev);
 
   const sendClick = (e) => {
-    handleClick(e.target.value);
+    e.preventDefault()
+    let [coinObj] = coinDB.filter(coin => coin.id === e.target.value)
+    handleClick(coinObj);
   };
 
   const handleBlur = () => {
@@ -41,16 +47,19 @@ export const Input = ({ handleClick }: InputPros) => {
   };
 
   return (
-    <>
+    <div style={{width:'100%', backgroundColor:"white"}}>
       <input
+        className={style.input}
         name="search"
-        placeholder="Search Any Things"
+        placeholder="Search Any Thing"
         value={search}
         onChange={handleChange}
         onFocus={handleFocus}
+        onBlur={handleBlur}
       />
       {isOpen
-        ? coinSearch.map((coin) => {
+        ? 
+        coinSearch.map((coin) => {
             return (
               <button
                 key={coin.id}
@@ -64,6 +73,6 @@ export const Input = ({ handleClick }: InputPros) => {
             );
           })
         : ""}
-    </>
+    </div>
   );
 };

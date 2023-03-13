@@ -1,0 +1,14 @@
+@use "../../styles/shared.scss" as shared;
+
+.SearchBar {
+width: 100%;
+
+    @include shared.not-mobile {
+        display: flex;
+    }
+    
+    @include shared.mobile-only {
+       
+        height: 8rem;
+    }
+}

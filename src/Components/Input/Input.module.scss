@@ -1,0 +1,19 @@
+@use "../../styles/shared.scss" as shared;
+
+.input {
+    width: 39rem;
+    height: 5rem;
+
+    box-sizing: border-box;
+    padding: 0 2rem;
+
+    border: 1px solid #f8f4f4;
+    border-radius: 1rem;
+    object-fit: contain;
+    background: url("/search-normal.png") no-repeat right;
+    background-position: 35rem;
+
+    ::placeholder {
+        color: #838383;
+    }
+    }
