@@ -33,7 +33,13 @@ export const LineChart = ({ price }: graphProps) => {
           target: "origin",
           boundary: "origin",
         },
-        backgroundColor: "rgb(255,170,102,0.5)",
+        backgroundColor: (context: ScriptableContext<"line">) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 180);
+          gradient.addColorStop(0, "rgba(250,174,50,1)");
+          gradient.addColorStop(1, "rgba(250,174,50,0)");
+          return gradient;
+        },
         borderColor: "rgb(255,170,102)",
         tension: 0.4,
         spanGaps: true,

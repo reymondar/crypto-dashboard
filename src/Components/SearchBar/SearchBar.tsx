@@ -1,4 +1,4 @@
-import React from "react";
+import { useRef } from "react";
 import { Input } from "../Input/Input";
 import style from "./SearchBar.module.scss"
 
@@ -7,8 +7,10 @@ type barProps = {
 };
 export const SearchBar = ({ setCoin }: barProps) => {
   
+  const ref = useRef(null)
   
   const handleClick = (coin) => {
+    ref.current.focus();
     //set the coin in the index.ts
     setCoin(coin.id);
   };
@@ -16,11 +18,11 @@ export const SearchBar = ({ setCoin }: barProps) => {
   return (
     <div className={style.searchBar}>
     <div>
-      <h1>Dashboard</h1>
-      <p>Welcome back<b>Reymond</b></p>
+      <h1>Dashboard</h1>  
+      <p>Welcome back <b>Reymond</b></p>
     </div>
-    <form style={{position:'absolute'}}>
-      <Input handleClick={handleClick} />
+    <form className={style.form}>
+      <Input handleClick={handleClick} ref={ref} />
     </form>
     </div>
   );

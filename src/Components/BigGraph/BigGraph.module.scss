@@ -1,0 +1,49 @@
+@use "../../styles/shared.scss" as shared;
+
+
+.container {
+    grid-column: 6 /11; 
+    grid-row: 3 / 4;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    width: 67rem;
+    height: 50rem;
+    border-radius: shared.$b-radius;
+    box-shadow: shared.$b-shadow;
+    
+    box-sizing: border-box;
+    padding: 0rem 4rem;
+}
+
+.selectors {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.timeLapse {
+    align-self: flex-end;
+    
+    display: flex;
+    box-sizing: border-box;
+
+    border-radius: 5px;
+    height: 5rem;
+
+    padding: .5rem;
+    margin-right: 2rem;
+
+    background-color: #f8f4f4;
+    * {
+      width: 6rem;
+      border: none;
+      background-color: transparent;
+    }
+}
+
+.active {
+    background-color: #ffffff;
+    border-radius: 5px;
+}

@@ -1,5 +1,4 @@
 @use "shared.scss" as shared;
-@import url('https://fonts.cdnfonts.com/css/kiro');
 
 * {
   margin: 0;
@@ -14,5 +13,13 @@ html {
 
 body {
   background-color: #ffffff;
-  
+
+  button {
+    &:hover {
+      cursor: pointer;
+    }
+  } 
+
 }
+
+

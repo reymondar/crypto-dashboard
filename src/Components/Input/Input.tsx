@@ -1,6 +1,5 @@
-import { useState, useContext } from "react";
+import { useState, useContext , useRef , forwardRef} from "react";
 import { coinContext } from "../dashboard/Dashboard";
-import Image from "next/image";
 import style from "./Input.module.scss";
 
 type Coins = {
@@ -12,10 +11,9 @@ type InputPros = {
   handleClick?: (e: string) => void;
 };
 
-export const Input = ({ handleClick }: InputPros) => {
+export const Input = forwardRef<HTMLDivElement>(function Input ({ handleClick }: InputPros, ref) {
   
   const coinDB = useContext(coinContext);
-
   //User search
   const [search, setSearch] = useState("");
   //Display ? open
@@ -23,31 +21,39 @@ export const Input = ({ handleClick }: InputPros) => {
 
   const [coinSearch, setCoinSearch] = useState([]);
 
+  
+
+
   const handleChange = (e) => {
     let typed: string = e.target.value.toLowerCase().trim();
     setSearch(typed);
     setCoinSearch(coinDB.filter((coin) => coin.id.includes(typed)));
   };
 
-  const handleFocus = () => setIsOpen((prev) => !prev);
+  const handleFocus = () => {
+    setIsOpen((prev) => !prev);
+  }
 
   const sendClick = (e) => {
     e.preventDefault()
+
     let [coinObj] = coinDB.filter(coin => coin.id === e.target.value)
+    
+    //Coin setter
     handleClick(coinObj);
   };
 
   const handleBlur = () => {
     setTimeout(() => {
-      setIsOpen((prev) => !prev);
+     // setIsOpen((prev) => !prev);
 
-      setSearch("");
-      setCoinSearch([]);
+      //setSearch("");
+     // setCoinSearch([]);
     }, 300);
   };
 
   return (
-    <div style={{width:'100%', backgroundColor:"white"}}>
+    <div className={style.container}>
       <input
         className={style.input}
         name="search"
@@ -56,6 +62,7 @@ export const Input = ({ handleClick }: InputPros) => {
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        ref={ref}
       />
       {isOpen
         ? 
@@ -63,16 +70,15 @@ export const Input = ({ handleClick }: InputPros) => {
             return (
               <button
                 key={coin.id}
-                style={{ display: "flex" }}
+                style={{background:`url("${coin.image}") no-repeat right`,backgroundSize:'2rem'}}
                 onClick={sendClick}
                 value={coin.id}
               >
                 {coin.name}
-                <img src={coin.image} alt={coin.id} style={{ width: "20px" }} />
               </button>
             );
           })
         : ""}
     </div>
   );
-};
+});

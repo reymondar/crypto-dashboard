@@ -1,6 +1,7 @@
 $black: #000000;
 $light-blue: #d9f5fc;
 $white: #fefdf3;
+$blue: #0894fc ;
 
 $mobileXspacing: 100vw/50;
 $mobileYspacing: 100vh/106;
@@ -33,6 +34,12 @@ $tablet-reading-font-size: 1.5rem;
 
 $desktop-actionable-font-size: 2.4rem;
 $desktop-reading-font-size: 2rem;
+
+/*card borders*/
+
+$b-radius: 25px;
+$b-shadow: 1px 1px 30px rgb(215, 213, 211, 0.3);
+
 
 /*Unified media queries*/
 @mixin mobile-only {
@@ -71,12 +78,6 @@ $desktop-reading-font-size: 2rem;
 
 @mixin font-uni-neue($weight) {
   font-family: "Uni Neue";
-  font-style: normal;
-  font-weight: $weight;
-}
-
-@mixin font-unbounded($weight) {
-  font-family: "Unbounded";
   font-style: normal;
   font-weight: $weight;
 }

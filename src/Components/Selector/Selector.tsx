@@ -1,14 +1,28 @@
 import style from "./Selector.module.scss"
-import Image from "next/image"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Input } from "../Input/Input"
-export const Selector = () => {
+
+interface Coin {
+    symbol: string,
+    current_price: string
+}
+
+type selectorProps = {
+    showPrice: boolean,
+    coin: Coin,
+    setCoin: () => Coin
+}
+
+export const Selector = ({showPrice, coin, setCoin}: selectorProps) => {
     
-    const [coin,setCoin] = useState({symbol: "btc",current_price: "0.0000000"})
     const [modal,setModal] = useState(false)
 
-    const handleClick = e => {
+    const inputRef = useRef(null)
+
+    const handleForm = e => {
         setModal(prev =>!prev)
+        
+        inputRef.current?.focus()
     }
 
     const handleClose = (e) => {
@@ -21,17 +35,17 @@ export const Selector = () => {
     modal && 
     <div className={style.background} onClick={handleClose}>
         <div className={style.modal}>
-            <Input handleClick={setCoin} />
+            <Input handleClick={setCoin} ref={inputRef} />
         </div>
     </div>
     }
     <div className={style.coin}>
-        <div className={style.selector} onClick={handleClick} >
+        <div className={style.selector} onClick={handleForm} >
         <img src={coin?.image} alt={coin?.name} style={{ width: "20px" }} />
-        <h2>{Object.keys({coin}).length !== 0 ? coin.symbol.toUpperCase() : "Select"}</h2>
+        <h2>{coin && coin.symbol?.toUpperCase()}</h2>
         <span>▼</span>
         </div>
-        <p>{coin.current_price}</p>
+        {showPrice && <p>{coin?.current_price}</p>}
     </div>
     </>
     )

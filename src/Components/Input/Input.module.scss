@@ -1,5 +1,27 @@
 @use "../../styles/shared.scss" as shared;
 
+.container {
+    width: 100%;
+    background-color: white;
+
+    button {
+    width: 100%;
+    border: none;
+    border-top: 1px solid whitesmoke;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+
+
+    &:hover {
+        color: #838383;
+        border-top: 1px solid black;
+    }
+    }
+
+}
+
 .input {
     width: 39rem;
     height: 5rem;
@@ -17,3 +39,6 @@
         color: #838383;
     }
     }
+
+.coin {
+}

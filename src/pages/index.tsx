@@ -3,12 +3,12 @@ import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Dashboard } from "@/Components/dashboard/Dashboard";
-
+import style from "../styles/home.module.scss"
 export default function Home() {
   const queryClient = new QueryClient();
 
   return (
-    <>
+    <div className={style.container}>
       <Head>
         <title>Create Next App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,6 +18,6 @@ export default function Home() {
         <Dashboard />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-    </>
+    </div>
   );
 }

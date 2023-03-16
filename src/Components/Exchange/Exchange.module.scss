@@ -1,4 +1,8 @@
+@use "../../styles/shared.scss" as shared;
+
 .container {
+
+  grid-row: 3 / 4;
   width: 36rem;
   padding: 1em 4em;
 
@@ -9,8 +13,8 @@
   align-items: center;
   row-gap: 0.8rem;
 
-  border-radius: 25px;
-  box-shadow: 1px 1px 30px rgb(215, 213, 211, 0.3);
+  border-radius: shared.$b-radius;
+  box-shadow: shared.$b-shadow;
 }
 
 .container > * {

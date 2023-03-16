@@ -1,18 +1,28 @@
 @use "../../styles/shared.scss" as shared;
 
 .wrapper {
-    @include shared.desktop-only {
+    
+    @include shared.desktop-only {        
+        width: 120rem;
         display: grid;
         @include shared.desktop-columns;
-    }
+    
+        row-gap: 2 * shared.$desktopYspacing;
+        margin: 0 auto;
+        }
+    
+        @include shared.tablet-only {   
+            width: 80%;
+            display: grid;
+            @include shared.tablet-columns;
+        }
+    
+        @include shared.mobile-only {
+            width: 100%;
+            padding: 0 1rem;
+        }
 
-    @include shared.tablet-only {
-        display: grid;
-        @include shared.tablet-columns;
-    }
-
-    @include shared.mobile-only {
-        width: 100%;
-        padding: 0 1rem;
+    * {
+        grid-column: 1 /11;
     }
 }

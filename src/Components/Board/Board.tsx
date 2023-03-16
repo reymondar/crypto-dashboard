@@ -1,7 +1,10 @@
+import { useContext } from "react";
+import { coinContext } from "../dashboard/Dashboard";
 import { useQuery } from "react-query";
 import { LineChart } from "../Charts/LineChart";
 import styles from "./Board.module.scss";
-import { Loader } from "@/Loader/Loader";
+import { Loader } from "../Loader/Loader";
+
 type Coin = {
   price?: string;
 };
@@ -11,19 +14,13 @@ type CoinProps = {
 };
 
 export const Board = ({ coin }: CoinProps) => {
-  const fetchCoin = (url: string): Promise<T> => {
-    return fetch(`https://api.coingecko.com/api/v3/coins/${coin}`).then(
-      (res) => {
-        if (!res.ok) {
-          throw new Error("Failed to access route");
-        }
-        return res.json();
-      }
-    );
-  };
 
-  const fetchGraph = (url: string): Promise<T> => {
-    return fetch(
+  const coinDB = useContext(coinContext)
+  
+  const [ coinData ] = coinDB.filter(coinz => coinz?.id === coin)
+
+  const fetchGraph = async () => {
+    return await fetch(
       `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=7&interval=daily`
     ).then((res) => {
       if (!res.ok) {
@@ -33,10 +30,9 @@ export const Board = ({ coin }: CoinProps) => {
     });
   };
 
-  const coinQuery = useQuery(["coin", coin], fetchCoin);
   const graphQuery = useQuery(["graph", coin], fetchGraph);
 
-  if (coinQuery.isLoading || graphQuery.isLoading) {
+  if (graphQuery.isLoading) {
     return (
       <div className={styles.container}>
         <Loader />
@@ -44,13 +40,17 @@ export const Board = ({ coin }: CoinProps) => {
     );
   }
 
-  if (coinQuery.isError || graphQuery.isError)
-    return <h1>an error has ocurred</h1>;
+  if (graphQuery.isError)
+    return (
+      <div className={styles.container}>
+      <p>Error!!!!!</p>
+    </div>
+    )
 
   //Taking out market cap & decimals from prices
 
   if (graphQuery) {
-    const chartData: number[] = graphQuery.data.prices.map((price: number[]) =>
+    const chartData: number[] = graphQuery.data.market_caps.map((price: number[]) =>
       price.shift()?.toFixed(2)
     );
 
@@ -58,24 +58,22 @@ export const Board = ({ coin }: CoinProps) => {
       name,
       image,
       symbol,
-      market_data: {
-        current_price: { usd },
-      },
-      market_data: { price_change_percentage_24h },
+      current_price,
+      price_change_percentage_24h,
     }: {
       name: string;
-      usd: string;
       image: string;
       symbol: string;
+      current_price: string,
       price_change_percentage_24h: string;
-    } = coinQuery.data;
+    } = coinData
 
     const percentage = Number(price_change_percentage_24h);
 
     return (
       <div className={styles.container}>
         <div className={styles.header}>
-          <img src={image["thumb"]} alt="thumbnail" />
+          <img src={image} alt="thumbnail" style={{width:'20px',height:'20px'}} />
           <div className={styles.titles}>
             <h1>{name}</h1>
             <p>{symbol}</p>
@@ -85,7 +83,7 @@ export const Board = ({ coin }: CoinProps) => {
           <LineChart price={chartData} />
         </div>
         <div className={styles.footer}>
-          <h2>${usd}</h2>
+          <h2>${current_price}</h2>
           <span>
             {percentage > 0 ? `+${percentage}` : `${percentage}`}
             {percentage > 0 ? "↗ " : "↘"}
