@@ -6,13 +6,16 @@ import {
   LineElement,
   Tooltip,
   Filler,
+  ScriptableContext,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 type graphProps = {
-  price: number[];
+  price: number[],
+  fullColor: string, 
+  halfColor: string
 };
 
-export const LineChart = ({ price }: graphProps) => {
+export const LineChart = ({ price , fullColor , halfColor }: graphProps) => {
   ChartJS.register(
     CategoryScale,
     PointElement,
@@ -21,6 +24,8 @@ export const LineChart = ({ price }: graphProps) => {
     Tooltip,
     Filler
   );
+
+console.log(fullColor , halfColor)
 
   //Falta una funcion para que los dias esten dinamicamente
   const labels = [1, 2, 3, 4, 5, 6, 7];
@@ -36,11 +41,11 @@ export const LineChart = ({ price }: graphProps) => {
         backgroundColor: (context: ScriptableContext<"line">) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 180);
-          gradient.addColorStop(0, "rgba(250,174,50,1)");
-          gradient.addColorStop(1, "rgba(250,174,50,0)");
+          gradient.addColorStop(0, fullColor);
+          gradient.addColorStop(1, halfColor);
           return gradient;
         },
-        borderColor: "rgb(255,170,102)",
+        borderColor: fullColor,
         tension: 0.4,
         spanGaps: true,
       },

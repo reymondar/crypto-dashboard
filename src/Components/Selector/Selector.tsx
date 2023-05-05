@@ -1,16 +1,20 @@
 import style from "./Selector.module.scss"
-import { useRef, useState } from "react"
+import { SetStateAction, useRef, useState } from "react"
 import { Input } from "../Input/Input"
+import Image from "next/image"
 
 interface Coin {
+    id: string,
     symbol: string,
-    current_price: string
+    current_price: string,
+    image?: string,
+    name?:string
 }
 
 type selectorProps = {
     showPrice: boolean,
     coin: Coin,
-    setCoin: () => Coin
+    setCoin: React.Dispatch<SetStateAction<Coin>>
 }
 
 export const Selector = ({showPrice, coin, setCoin}: selectorProps) => {
@@ -25,8 +29,9 @@ export const Selector = ({showPrice, coin, setCoin}: selectorProps) => {
         inputRef.current?.focus()
     }
 
-    const handleClose = (e) => {
-        if(!e.target.name) setModal(prev => !prev)
+    const handleClose = (e: React.SyntheticEvent) => {
+        const target = e.target as HTMLInputElement
+        if(!target.name) setModal(prev => !prev)
     }
 
     return(
@@ -41,7 +46,7 @@ export const Selector = ({showPrice, coin, setCoin}: selectorProps) => {
     }
     <div className={style.coin}>
         <div className={style.selector} onClick={handleForm} >
-        <img src={coin?.image} alt={coin?.name} style={{ width: "20px" }} />
+        {coin.image && coin.name && <Image src={coin.image} alt={coin.name} width={20} height={20} />}
         <h2>{coin && coin.symbol?.toUpperCase()}</h2>
         <span>▼</span>
         </div>

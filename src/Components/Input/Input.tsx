@@ -3,8 +3,9 @@ import { coinContext } from "../dashboard/Dashboard";
 import style from "./Input.module.scss";
 
 type Coins = {
-  id: string;
-  image: string;
+  id: string,
+  image: string,
+  name: string
 };
 
 type InputPros = {
@@ -24,23 +25,27 @@ export const Input = forwardRef<HTMLDivElement>(function Input ({ handleClick }:
   
 
 
-  const handleChange = (e) => {
-    let typed: string = e.target.value.toLowerCase().trim();
+  const handleChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement
+    
+    let typed: string = target.value.toLowerCase().trim();
     setSearch(typed);
-    setCoinSearch(coinDB.filter((coin) => coin.id.includes(typed)));
+    
+    setCoinSearch(coinDB.filter((coin: Coins) => coin.id.includes(typed)));
   };
 
   const handleFocus = () => {
     setIsOpen((prev) => !prev);
   }
 
-  const sendClick = (e) => {
+  const sendClick = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
-    let [coinObj] = coinDB.filter(coin => coin.id === e.target.value)
+    const target = e.target as HTMLButtonElement
+    let [coinObj] = coinDB.filter((coin: Coins) => coin.id === target.value)
     
     //Coin setter
-    handleClick(coinObj);
+    handleClick ? handleClick(coinObj) : ''
   };
 
   const handleBlur = () => {
@@ -62,11 +67,10 @@ export const Input = forwardRef<HTMLDivElement>(function Input ({ handleClick }:
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        ref={ref}
       />
       {isOpen
         ? 
-        coinSearch.map((coin) => {
+        coinSearch.map((coin: Coins) => {
             return (
               <button
                 key={coin.id}

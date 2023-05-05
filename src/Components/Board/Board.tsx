@@ -4,24 +4,31 @@ import { useQuery } from "react-query";
 import { LineChart } from "../Charts/LineChart";
 import styles from "./Board.module.scss";
 import { Loader } from "../Loader/Loader";
+import { JsxElement } from "typescript";
 
-type Coin = {
-  price?: string;
+type Currency = {
+  price: string,
+  id: string
 };
 
+
 type CoinProps = {
-  coin: string;
+  name: string,
+  fullColor: string,
+  halfColor: string
 };
 
 export const Board = ({ coin }: CoinProps) => {
 
+  const { name } = coin
+
   const coinDB = useContext(coinContext)
   
-  const [ coinData ] = coinDB.filter(coinz => coinz?.id === coin)
+  const [ coinData ] = coinDB.filter((coins: Currency) => coins.id === name)
 
   const fetchGraph = async () => {
     return await fetch(
-      `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=7&interval=daily`
+      `https://api.coingecko.com/api/v3/coins/${name}/market_chart?vs_currency=usd&days=7&interval=daily`
     ).then((res) => {
       if (!res.ok) {
         throw new Error("Failed to load graph");
@@ -30,7 +37,7 @@ export const Board = ({ coin }: CoinProps) => {
     });
   };
 
-  const graphQuery = useQuery(["graph", coin], fetchGraph);
+  const graphQuery = useQuery(["graph", name], fetchGraph);
 
   if (graphQuery.isLoading) {
     return (
@@ -42,8 +49,8 @@ export const Board = ({ coin }: CoinProps) => {
 
   if (graphQuery.isError)
     return (
-      <div className={styles.container}>
-      <p>Error!!!!!</p>
+    <div className={styles.container}>
+      <p>Error. Please reload</p>
     </div>
     )
 
@@ -80,7 +87,7 @@ export const Board = ({ coin }: CoinProps) => {
           </div>
         </div>
         <div className={styles.graph}>
-          <LineChart price={chartData} />
+          <LineChart price={chartData} fullColor={coin.fullColor} halfColor={coin.halfColor} />
         </div>
         <div className={styles.footer}>
           <h2>${current_price}</h2>

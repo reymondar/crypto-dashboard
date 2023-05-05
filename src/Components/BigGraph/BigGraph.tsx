@@ -1,15 +1,20 @@
 import { MainChart } from "../Charts/MainChart"
 import { Selector } from "../Selector/Selector"
 import style from "./BigGraph.module.scss"
-import { useState , useReducer , useEffect } from "react"
+import React, { useState , useReducer , useEffect } from "react"
 import { useQuery } from "react-query"
 import { Loader } from "../Loader/Loader"
 
-type reducerProps = {
-    split: number[],
-    date: number
+
+type State = {
+    days: string[],
+    interval: number
 }
 
+type Actions = 
+| {type: "DAY"}
+| {type: "WEEK"}
+| {type: "MONTH"}
 
 
 //Funcion para crear los labels del gráfico
@@ -46,28 +51,36 @@ const reduceSetter = (num: number) => {
     }
 }
 
-const labelReducer = (timeLapse, action ) => {
+const labelReducer = (timeLapse: State, action: Actions ): State => {
     switch(action.type) {
-        case 'Day':{
-            return reduceSetter(1)
+        case "DAY":{
+            const timeLapse: State = reduceSetter(1) 
+            return timeLapse 
         }
-        case 'Week':{
-            return reduceSetter(7)
-           
+        case "WEEK":{
+            const timeLapse: State = reduceSetter(7) 
+            return timeLapse
         }
-        case 'Month':{
-            return reduceSetter(30)
-        }      
+        case "MONTH":{
+            const timeLapse: State = reduceSetter(30) 
+            return timeLapse
+        }  
+        default: {
+            return timeLapse
+        }    
     }
 }
 
+const initialState: State = {days: ['1'], interval: 1}
+
 export const BigGraph = () => {
     
-    //Init value redundant created by useEffect hook
-    const [timeLapse, dispatch] = useReducer(labelReducer, {days: 1, interval: 1})
+    const [timeLapse, dispatch] = useReducer(labelReducer, initialState)
     const [coin,setCoin] = useState({id:"bitcoin", symbol: "btc",current_price: "0.0000000"})
     
-    useEffect(()=> dispatch({type: "Day"}), []);
+    useEffect(()=> dispatch({type: "DAY"}), []);
+
+    const { interval } = timeLapse
 
     const fetchCoin = async () => {
         return await fetch(
@@ -81,10 +94,12 @@ export const BigGraph = () => {
     }
 
 
-    const { data, isLoading, isError } = useQuery(["bigGraph", timeLapse?.interval, coin],fetchCoin)
+    const { data, isLoading, isError } = useQuery(["bigGraph", interval, coin],fetchCoin)
     
-    const handleClick = e => {
-        let lapse = e.target.innerText
+    const handleClick = (e: React.SyntheticEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLButtonElement
+        let lapse = target.name as "DAY" | "WEEK" | "MONTH"
+        // lapse is an Actions type property
         dispatch({ type : lapse })
     }
 
@@ -98,24 +113,22 @@ export const BigGraph = () => {
     const { prices } = data
 
     
-    const pricesDaily = prices.filter((price,i) => {
-        if(i % timeLapse.interval === 0){
+    const pricesDaily = prices.filter((price: number,i: number) => {
+        if(i % interval === 0){
 
         return price
         }
 
     })
+ 
 
-
-    
-    
     return(
         <div className={style.container}>
             <div className={style.selectors}>
                 <div className={style.timeLapse} onClick={handleClick}>
-                    <button className={timeLapse?.interval === 1 ? style.active : ""}>Day</button>
-                    <button className={timeLapse?.interval === 7  ? style.active : ""}>Week</button>
-                    <button className={timeLapse?.interval === 30  ? style.active : ""}>Month</button>
+                    <button name="DAY" className={interval === 1 ? style.active : ""}>Day</button>
+                    <button name="WEEK" className={interval === 7  ? style.active : ""}>Week</button>
+                    <button name="MONTH" className={interval === 30  ? style.active : ""}>Month</button>
                 </div>
                 <Selector showPrice={false} coin={coin} setCoin={setCoin} />
             </div>

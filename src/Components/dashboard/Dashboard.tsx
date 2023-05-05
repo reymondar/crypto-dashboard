@@ -33,16 +33,18 @@ export const Dashboard = () => {
     return <div>Something happened. Refresh</div>;
   }
 
+  const bitcoin = {name: 'bitcoin' , fullColor: 'rgba(247, 147, 26,1.00)' , halfColor: 'rgba(247, 147, 26,0.3)'}
+  const ethereum = {name: 'ethereum' , fullColor: 'rgba(158,182,184,1.00)' , halfColor: 'rgba(158,182,184,0.3)'}
+  const cardano = {name: 'cardano' , fullColor: 'rgba(42, 113, 208,1.00)' , halfColor: 'rgba(42, 113, 208,0.3)'}
 
   return (
     <coinContext.Provider value={data}>
       <Wrapper>
         <SearchBar setCoin={setActualCoin} />
         <div className={style.boardContainer}>
-          <Board coin={actualCoin} />
-          <Board coin={'ethereum'} />
-          <Board coin={'reserve-rights-token'} />
-            
+          <Board coin={bitcoin} />
+          <Board coin={ethereum} />
+          <Board coin={cardano} />
         </div>
       <Exchange />
       <BigGraph />

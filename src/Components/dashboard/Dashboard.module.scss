@@ -3,4 +3,9 @@
 .boardContainer {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    @include shared.mobile-only {
+        margin-top: 2rem;
+    }
 }

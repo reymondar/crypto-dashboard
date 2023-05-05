@@ -6,11 +6,19 @@ import {
     LineElement,
     Tooltip,
     Filler,
+    ScriptableContext,
   } from "chart.js";
   import { Line } from "react-chartjs-2";
+
+
+  type TimeLapse = {
+    days: string[] ,
+    interval: number
+  }
+
   type graphProps = {
     prices: string[]
-    timeLapse: string[]
+    timeLapse: TimeLapse
   };
   
   export const MainChart = ({ prices, timeLapse  }: graphProps) => {
@@ -55,13 +63,6 @@ import {
           grid: {
             display: false,
           },
-        },
-  
-        y: {
-          grid: {
-            //NOT WORKING RN
-            borderDash: [8,8],
-          }
         },
       },
     };
