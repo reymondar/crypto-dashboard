@@ -1,38 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Introduction
 
-## Getting Started
+This project was created by me. If you want to contribute you can write <a href="mailto:aranaramon1@gmail.com?subject=Crypto%20app">here </a>. 
 
-First, run the development server:
+I was intreseted in learning more about working with API's, using react-query and Next.js.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+I created this project on Next.js (typescript). I started by installing a popular library called Chartjs and react-chartjs-2 to create the graphs. Then react-query to manage api responses and Sass for the styling.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+I learned so much so much. More than with any other project or course I created because I (or at least tried to) optimized every aspect on the fly. Of course there is still some refactor to make, like the responsiveness and typescript errors but other than that I used a ton of react tools to make this app flyy.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Design
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+So I took this design from behance, and it should look something like this:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+![Crypto Dashboard - Free Ui Kit (Community)](https://user-images.githubusercontent.com/101018458/225750073-6d8f9f91-c0ad-40e7-b4ee-88b10f66f715.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+I limited myself to just creating the dashboard since every back-end dev I know is busy or simply not answering my texts. I'd like to use this project to learn back-end in the future but for now I'm more than happy with the result.
 
-## Learn More
+## Next challenges
 
-To learn more about Next.js, take a look at the following resources:
+Okay, so for now This is a hell of a ride. For my next project I'm adding Gatsby.js, Tailwind CSS and many more stuff to my knowledge box a.k.a the brain.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Matter of fact, I consider this project unfinished as I want to include many more features like a page for each crypto selected, local storage and the wallet component to reflect the 3 main graphs, buuuuuut, I'm too anxious to learn Tailwind and Gatsby jeje (please don't judge me), and I'll come back later.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
