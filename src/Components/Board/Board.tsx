@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import { LineChart } from "../Charts/LineChart";
 import styles from "./Board.module.scss";
 import { Loader } from "../Loader/Loader";
-import { JsxElement } from "typescript";
+import Image from "next/image";
 
 type Currency = {
   price: string,
@@ -18,9 +18,7 @@ type CoinProps = {
   halfColor: string
 };
 
-export const Board = ({ coin }: CoinProps) => {
-
-  const { name } = coin
+export const Board = ({ name , fullColor , halfColor }: CoinProps) => {
 
   const coinDB = useContext(coinContext)
   
@@ -55,20 +53,16 @@ export const Board = ({ coin }: CoinProps) => {
     )
 
   //Taking out market cap & decimals from prices
-
-  if (graphQuery) {
-    const chartData: number[] = graphQuery.data.market_caps.map((price: number[]) =>
+    const chartData: number[] = graphQuery.data.prices.map((price: number[]) =>
       price.shift()?.toFixed(2)
     );
 
     const {
-      name,
       image,
       symbol,
       current_price,
       price_change_percentage_24h,
     }: {
-      name: string;
       image: string;
       symbol: string;
       current_price: string,
@@ -80,14 +74,14 @@ export const Board = ({ coin }: CoinProps) => {
     return (
       <div className={styles.container}>
         <div className={styles.header}>
-          <img src={image} alt="thumbnail" style={{width:'20px',height:'20px'}} />
+          <Image src={image} alt="thumbnail" width={20} height={20} />
           <div className={styles.titles}>
             <h1>{name}</h1>
             <p>{symbol}</p>
           </div>
         </div>
         <div className={styles.graph}>
-          <LineChart price={chartData} fullColor={coin.fullColor} halfColor={coin.halfColor} />
+          <LineChart price={chartData} fullColor={fullColor} halfColor={halfColor} />
         </div>
         <div className={styles.footer}>
           <h2>${current_price}</h2>
@@ -98,5 +92,5 @@ export const Board = ({ coin }: CoinProps) => {
         </div>
       </div>
     );
-  }
+  
 };

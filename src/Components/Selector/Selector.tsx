@@ -23,10 +23,8 @@ export const Selector = ({showPrice, coin, setCoin}: selectorProps) => {
 
     const inputRef = useRef(null)
 
-    const handleForm = e => {
+    const handleForm = (e: React.SyntheticEvent) => {
         setModal(prev =>!prev)
-        
-        inputRef.current?.focus()
     }
 
     const handleClose = (e: React.SyntheticEvent) => {

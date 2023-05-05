@@ -15,6 +15,26 @@ type graphProps = {
   halfColor: string
 };
 
+
+const days = ['Monday','Tuesday','Wednesday','Thurdsay','Friday','Saturday','Sunday']
+
+  const reOrderDays = (days: string[]) => {
+    
+    const today = new Date()
+    const todayIndex = today.getDay()
+
+    const elementsToRemove = 7 - todayIndex
+    const elementsRemoved = days.splice(todayIndex,elementsToRemove)
+
+    const dateReOrdered = elementsRemoved.concat(days)
+
+    return dateReOrdered
+    
+  }
+
+  const week = reOrderDays(days)
+
+
 export const LineChart = ({ price , fullColor , halfColor }: graphProps) => {
   ChartJS.register(
     CategoryScale,
@@ -25,10 +45,9 @@ export const LineChart = ({ price , fullColor , halfColor }: graphProps) => {
     Filler
   );
 
-console.log(fullColor , halfColor)
 
   //Falta una funcion para que los dias esten dinamicamente
-  const labels = [1, 2, 3, 4, 5, 6, 7];
+  const labels = week
   const data = {
     labels,
     datasets: [

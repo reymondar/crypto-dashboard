@@ -3,16 +3,14 @@ import { Input } from "../Input/Input";
 import style from "./SearchBar.module.scss"
 
 type barProps = {
-  setCoin?: (coin: string) => void;
+  setCoin: React.Dispatch<string>;
 };
 export const SearchBar = ({ setCoin }: barProps) => {
   
-  const ref = useRef(null)
-  
-  const handleClick = (coin) => {
-    ref.current.focus();
+
+  const handleClick = (id: string) => {
     //set the coin in the index.ts
-    setCoin(coin.id);
+    setCoin(id) 
   };
 
   return (
@@ -22,7 +20,7 @@ export const SearchBar = ({ setCoin }: barProps) => {
       <p>Welcome back <b>Reymond</b></p>
     </div>
     <form className={style.form}>
-      <Input handleClick={handleClick} ref={ref} />
+      <Input handleClick={handleClick}/>
     </form>
     </div>
   );

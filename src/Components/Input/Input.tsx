@@ -1,4 +1,4 @@
-import { useState, useContext , useRef , forwardRef} from "react";
+import { useState, useContext} from "react";
 import { coinContext } from "../dashboard/Dashboard";
 import style from "./Input.module.scss";
 
@@ -12,7 +12,7 @@ type InputPros = {
   handleClick?: (e: string) => void;
 };
 
-export const Input = forwardRef<HTMLDivElement>(function Input ({ handleClick }: InputPros, ref) {
+export const Input = ({ handleClick }: InputPros) => {
   
   const coinDB = useContext(coinContext);
   //User search
@@ -43,17 +43,18 @@ export const Input = forwardRef<HTMLDivElement>(function Input ({ handleClick }:
 
     const target = e.target as HTMLButtonElement
     let [coinObj] = coinDB.filter((coin: Coins) => coin.id === target.value)
+    let { id } = coinObj
     
     //Coin setter
-    handleClick ? handleClick(coinObj) : ''
+    handleClick ? handleClick(id) : ''
   };
 
   const handleBlur = () => {
     setTimeout(() => {
-     // setIsOpen((prev) => !prev);
+    //  setIsOpen((prev) => !prev);
 
-      //setSearch("");
-     // setCoinSearch([]);
+    //   setSearch("");
+    //  setCoinSearch([]);
     }, 300);
   };
 
@@ -85,4 +86,4 @@ export const Input = forwardRef<HTMLDivElement>(function Input ({ handleClick }:
         : ""}
     </div>
   );
-});
+  };
