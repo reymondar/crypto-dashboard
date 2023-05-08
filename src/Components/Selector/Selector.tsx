@@ -1,29 +1,47 @@
 import style from "./Selector.module.scss"
-import { SetStateAction, useRef, useState } from "react"
+import { SetStateAction, useEffect, useContext, useState } from "react"
 import { Input } from "../Input/Input"
 import Image from "next/image"
+import { coinContext } from "../dashboard/Dashboard"
 
 interface Coin {
     id: string,
     symbol: string,
     current_price: string,
-    image?: string,
-    name?:string
+    image: string,
+    name:string
 }
 
 type selectorProps = {
     showPrice: boolean,
-    coin: Coin,
-    setCoin: React.Dispatch<SetStateAction<Coin>>
+    graphCoin?: React.Dispatch<SetStateAction<{id:string,symbol:string,current_price:string}>>
 }
 
-export const Selector = ({showPrice, coin, setCoin}: selectorProps) => {
+export const Selector = ({showPrice, graphCoin}: selectorProps) => {
     
+    const [actualCoin, setActualCoin] = useState('')
+    const [coin,setCoin] = useState({id:'',symbol: '' , current_price: '' , image:'' , name:''})
     const [modal,setModal] = useState(false)
 
-    const inputRef = useRef(null)
+    const coinDB = useContext(coinContext)
 
-    const handleForm = (e: React.SyntheticEvent) => {
+
+    useEffect(()=>{
+        const selected: Coin[] = coinDB.filter((coin: Coin) => {
+            return coin.id === actualCoin
+        }) 
+        
+        if(selected.length >= 1) {
+        const [ selectedCoin ] = selected
+
+        const { id , symbol , current_price , image , name} = selectedCoin
+        setCoin({id: id , symbol: symbol , current_price: current_price , image: image , name: name})
+
+        graphCoin ? graphCoin({id: id , symbol: symbol , current_price: current_price}) : ''
+    }
+    },[actualCoin])
+
+    const handleForm = () => {
         setModal(prev =>!prev)
     }
 
@@ -38,7 +56,7 @@ export const Selector = ({showPrice, coin, setCoin}: selectorProps) => {
     modal && 
     <div className={style.background} onClick={handleClose}>
         <div className={style.modal}>
-            <Input handleClick={setCoin} ref={inputRef} />
+            <Input handleClick={setActualCoin} />
         </div>
     </div>
     }

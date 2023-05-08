@@ -7,9 +7,11 @@ import { Wrapper } from "../Wrapper/Wrapper";
 import { BigGraph } from "../BigGraph/BigGraph";
 import style from "./Dashboard.module.scss"
 
-export const coinContext = createContext([])
+const coinContext = createContext([])
 
-export const Dashboard = () => {
+
+
+const Dashboard = () => {
   const [actualCoin, setActualCoin] = useState("bitcoin");
   
   const fetchCoinList = async () => {
@@ -33,27 +35,6 @@ export const Dashboard = () => {
     return <div>Something happened. Refresh</div>;
   }
 
-  const days = ['Monday','Tuesday','Wednesday','Thurdsay','Friday','Saturday','Sunday']
-
-  const reOrderDays = (days: string[]) => {
-    
-    const today = new Date()
-    const todayIndex = today.getDay()
-
-    const elementsIndex = todayIndex + 1
-    const elementsToRemove = 7 - todayIndex
-    const elementsRemoved = days.splice(todayIndex,elementsToRemove)
-
-    const dateReOrdered = elementsRemoved.concat(days)
-
-    console.log(dateReOrdered)
-    return dateReOrdered
-    
-  }
-
-  reOrderDays(days)
-
-
   const bitcoin = {name: 'bitcoin' , fullColor: 'rgba(247, 147, 26,1.00)' , halfColor: 'rgba(247, 147, 26,0.3)'}
   const ethereum = {name: 'ethereum' , fullColor: 'rgba(158,182,184,1.00)' , halfColor: 'rgba(158,182,184,0.3)'}
   const cardano = {name: 'cardano' , fullColor: 'rgba(42, 113, 208,1.00)' , halfColor: 'rgba(42, 113, 208,0.3)'}
@@ -73,3 +54,5 @@ export const Dashboard = () => {
     </coinContext.Provider>
   );
 };
+
+export { Dashboard ,coinContext }

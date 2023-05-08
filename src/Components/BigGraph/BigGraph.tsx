@@ -115,7 +115,6 @@ export const BigGraph = () => {
     
     const pricesDaily = prices.filter((price: number,i: number) => {
         if(i % interval === 0){
-
         return price
         }
 
@@ -130,7 +129,7 @@ export const BigGraph = () => {
                     <button name="WEEK" className={interval === 7  ? style.active : ""}>Week</button>
                     <button name="MONTH" className={interval === 30  ? style.active : ""}>Month</button>
                 </div>
-                <Selector showPrice={false} coin={coin} setCoin={setCoin} />
+                <Selector showPrice={false} graphCoin={setCoin} />
             </div>
             <div className={style.chartContainer}>
                 <MainChart prices={pricesDaily} timeLapse={timeLapse} />

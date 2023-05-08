@@ -1,4 +1,4 @@
-import { useState, useContext} from "react";
+import { useState, useContext, SetStateAction} from "react";
 import { coinContext } from "../dashboard/Dashboard";
 import style from "./Input.module.scss";
 
@@ -9,7 +9,7 @@ type Coins = {
 };
 
 type InputPros = {
-  handleClick?: (e: string) => void;
+  handleClick?: React.Dispatch<SetStateAction<string>>;
 };
 
 export const Input = ({ handleClick }: InputPros) => {
