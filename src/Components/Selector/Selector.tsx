@@ -3,6 +3,7 @@ import { SetStateAction, useEffect, useContext, useState } from "react"
 import { Input } from "../Input/Input"
 import Image from "next/image"
 import { coinContext } from "../dashboard/Dashboard"
+import { Actions } from "../Exchange/Exchange"
 
 interface Coin {
     id: string,
@@ -14,13 +15,17 @@ interface Coin {
 
 type selectorProps = {
     showPrice: boolean,
-    graphCoin?: React.Dispatch<SetStateAction<{id:string,symbol:string,current_price:string}>>
+    currency: Coin,
+    direction?: "FROM" | "TO"
+    dispatch?: React.Dispatch<Actions> 
+    graphCoin?: React.Dispatch<SetStateAction<Coin>>
 }
 
-export const Selector = ({showPrice, graphCoin}: selectorProps) => {
+
+export const Selector = ({showPrice, currency , direction , dispatch , graphCoin}: selectorProps) => {
     
     const [actualCoin, setActualCoin] = useState('')
-    const [coin,setCoin] = useState({id:'',symbol: '' , current_price: '' , image:'' , name:''})
+    
     const [modal,setModal] = useState(false)
 
     const coinDB = useContext(coinContext)
@@ -35,9 +40,14 @@ export const Selector = ({showPrice, graphCoin}: selectorProps) => {
         const [ selectedCoin ] = selected
 
         const { id , symbol , current_price , image , name} = selectedCoin
-        setCoin({id: id , symbol: symbol , current_price: current_price , image: image , name: name})
 
-        graphCoin ? graphCoin({id: id , symbol: symbol , current_price: current_price}) : ''
+        if(dispatch && direction) dispatch({type: direction, payload: {id: id , symbol: symbol , current_price: current_price , image: image , name: name} })
+        
+        if(graphCoin) {
+            console.log('graph')
+            graphCoin({id: id , symbol: symbol , current_price: current_price , image: image , name: name})
+        }
+        
     }
     },[actualCoin])
 
@@ -62,11 +72,11 @@ export const Selector = ({showPrice, graphCoin}: selectorProps) => {
     }
     <div className={style.coin}>
         <div className={style.selector} onClick={handleForm} >
-        {coin.image && coin.name && <Image src={coin.image} alt={coin.name} width={20} height={20} />}
-        <h2>{coin && coin.symbol?.toUpperCase()}</h2>
+        {currency.image && currency.name && <Image src={currency.image} alt={currency.name} width={20} height={20} />}
+        <h2>{currency.symbol.toUpperCase()}</h2>
         <span>▼</span>
         </div>
-        {showPrice && <p>{coin?.current_price}</p>}
+        {showPrice && <p>{currency.current_price}</p>}
     </div>
     </>
     )

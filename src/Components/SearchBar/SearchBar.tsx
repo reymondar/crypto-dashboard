@@ -8,11 +8,6 @@ type barProps = {
 export const SearchBar = ({ setCoin }: barProps) => {
   
 
-  const handleClick = (id: string) => {
-    //set the coin in the index.ts
-    setCoin(id) 
-  };
-
   return (
     <div className={style.searchBar}>
     <div>
@@ -20,7 +15,7 @@ export const SearchBar = ({ setCoin }: barProps) => {
       <p>Welcome back <b>Reymond</b></p>
     </div>
     <form className={style.form}>
-      <Input handleClick={handleClick}/>
+      <Input handleClick={setCoin}/>
     </form>
     </div>
   );

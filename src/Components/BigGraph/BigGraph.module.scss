@@ -16,6 +16,17 @@
     
     box-sizing: border-box;
     padding: 0rem 4rem;
+    
+  @include shared.tablet-only {
+    padding: 0;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  @include shared.mobile-only {
+    padding: 0;
+    flex-wrap: wrap;
+  }
+  
 }
 
 .selectors {

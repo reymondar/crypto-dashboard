@@ -48,8 +48,10 @@ const Dashboard = () => {
           <Board {...ethereum} />
           <Board {...cardano} />
         </div>
-      <Exchange />
-      <BigGraph />
+      <div className={style.exchangeContainer}>
+        <Exchange />
+        <BigGraph />
+      </div>
       </Wrapper>
     </coinContext.Provider>
   );

@@ -14,9 +14,7 @@
         }
     
         @include shared.tablet-only {   
-            width: 80%;
-            display: grid;
-            @include shared.tablet-columns;
+            width: 100%;
         }
     
         @include shared.mobile-only {

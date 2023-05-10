@@ -9,7 +9,7 @@ type Coins = {
 };
 
 type InputPros = {
-  handleClick?: React.Dispatch<SetStateAction<string>>;
+  handleClick?: React.Dispatch<SetStateAction<string>> | React.Dispatch<string>
 };
 
 export const Input = ({ handleClick }: InputPros) => {

@@ -6,11 +6,16 @@
   height: 30em;
   padding: 0.5em 2em;
 
-  grid-template-columns: repeat(6, 6em);
+  grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(5, 1fr);
 
   border-radius: shared.$b-radius;
   box-shadow: shared.$b-shadow;
+
+  @include shared.tablet-only {
+    width:25rem;
+    flex-wrap: nowrap;
+  }
 
   * {
     grid-column: 1 /7;
@@ -43,6 +48,11 @@
 
 .graph {
   grid-row: 2 / 5;
+  
+  @include shared.tablet-only {
+    //width:30rem;
+    flex-wrap: nowrap;
+  }
 }
 
 .footer {

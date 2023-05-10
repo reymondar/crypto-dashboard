@@ -76,7 +76,7 @@ const initialState: State = {days: ['1'], interval: 1}
 export const BigGraph = () => {
     
     const [timeLapse, dispatch] = useReducer(labelReducer, initialState)
-    const [coin,setCoin] = useState({id:"bitcoin", symbol: "btc",current_price: "0.0000000"})
+    const [coin,setCoins] = useState({id:"bitcoin", symbol: "btc",current_price: "0.0000000", name:"Bitcoin" , image:""})
     
     useEffect(()=> dispatch({type: "DAY"}), []);
 
@@ -96,7 +96,7 @@ export const BigGraph = () => {
 
     const { data, isLoading, isError } = useQuery(["bigGraph", interval, coin],fetchCoin)
     
-    const handleClick = (e: React.SyntheticEvent<HTMLDivElement>) => {
+    const handleClick = (e: React.SyntheticEvent) => {
         const target = e.target as HTMLButtonElement
         let lapse = target.name as "DAY" | "WEEK" | "MONTH"
         // lapse is an Actions type property
@@ -129,7 +129,7 @@ export const BigGraph = () => {
                     <button name="WEEK" className={interval === 7  ? style.active : ""}>Week</button>
                     <button name="MONTH" className={interval === 30  ? style.active : ""}>Month</button>
                 </div>
-                <Selector showPrice={false} graphCoin={setCoin} />
+                <Selector showPrice={false} currency={coin} graphCoin={setCoins} />
             </div>
             <div className={style.chartContainer}>
                 <MainChart prices={pricesDaily} timeLapse={timeLapse} />
