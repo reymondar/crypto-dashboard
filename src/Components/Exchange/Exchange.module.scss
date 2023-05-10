@@ -61,7 +61,12 @@
   grid-row: 4 / 6;
   display: flex;
   justify-content: flex-end;
+
+  :hover {
+    cursor: pointer;
+  }
 }
+
 
 .to {
   grid-row: 6 / 7;
