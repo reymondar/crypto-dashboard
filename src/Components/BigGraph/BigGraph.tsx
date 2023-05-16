@@ -4,7 +4,7 @@ import style from "./BigGraph.module.scss"
 import React, { useState , useReducer , useEffect } from "react"
 import { useQuery } from "react-query"
 import { Loader } from "../Loader/Loader"
-
+import axios from '@/axios'
 
 type State = {
     days: string[],
@@ -83,15 +83,17 @@ export const BigGraph = () => {
     const { interval } = timeLapse
 
     const fetchCoin = async () => {
-        return await fetch(
-            `https://api.coingecko.com/api/v3/coins/${coin.id}/market_chart?vs_currency=usd&days=364&interval=30`)
-            .then((res) => {
-            if(!res.ok) {
-                throw new Error("Failed to load data")
-            }
-            return res.json()
-        })
-    }
+        try {
+          const response = await axios.get(`coins/${coin.id}/market_chart?vs_currency=usd&days=364&interval=30`)
+          console.log(response.data)
+          return response.data
+          
+        }
+        catch(error) {
+          console.log(error)
+        }
+      }
+    
 
 
     const { data, isLoading, isError } = useQuery(["bigGraph", interval, coin],fetchCoin)

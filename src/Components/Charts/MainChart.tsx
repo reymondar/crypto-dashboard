@@ -24,7 +24,6 @@ import {
   export const MainChart = ({ prices, timeLapse  }: graphProps) => {
     ChartJS.register(
       CategoryScale,
-      PointElement,
       LineElement,
       LinearScale,
       Tooltip,
@@ -45,11 +44,11 @@ import {
           backgroundColor: (context: ScriptableContext<"line">) => {
             const ctx = context.chart.ctx;
             const gradient = ctx.createLinearGradient(0, 0, 0, 250);
-            gradient.addColorStop(0, "rgba(75,192,192,1)");
-            gradient.addColorStop(1, "rgba(75,192,192,0)");
+            gradient.addColorStop(0, "rgba(0, 150, 255,1)");
+            gradient.addColorStop(1, "rgba(0, 150, 255,0)");
             return gradient;
           },
-          borderColor: "rgba(75,192,192,1)",
+          borderColor: "rgba(0, 150, 255,1)",
           tension: 0.4,
           spanGaps: true,
         },
@@ -57,6 +56,11 @@ import {
     };
   
     const options = {
+      elements: {
+        point:{
+            radius: 0
+        }
+    },
       responsive: true,
       scales: {
         x: {

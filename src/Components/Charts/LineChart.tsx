@@ -72,6 +72,11 @@ export const LineChart = ({ price , fullColor , halfColor }: graphProps) => {
   };
 
   const options = {
+    elements: {
+      point:{
+          radius: 1.4
+      }
+  },
     responsive: true,
     scales: {
       x: {

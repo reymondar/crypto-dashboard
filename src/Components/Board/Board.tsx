@@ -5,6 +5,7 @@ import { LineChart } from "../Charts/LineChart";
 import styles from "./Board.module.scss";
 import { Loader } from "../Loader/Loader";
 import Image from "next/image";
+import axios from "@/axios"
 
 type Currency = {
   price: string,
@@ -24,18 +25,18 @@ export const Board = ({ name , fullColor , halfColor }: CoinProps) => {
   
   const [ coinData ] = coinDB.filter((coins: Currency) => coins.id === name)
 
-  const fetchGraph = async () => {
-    return await fetch(
-      `https://api.coingecko.com/api/v3/coins/${name}/market_chart?vs_currency=usd&days=7&interval=daily`
-    ).then((res) => {
-      if (!res.ok) {
-        throw new Error("Failed to load graph");
-      }
-      return res.json();
-    });
-  };
-
-  const graphQuery = useQuery(["graph", name], fetchGraph);
+  const fetchGraphh = async () => {
+    try {
+      const response = await axios.get(`coins/${name}/market_chart?vs_currency=usd&days=7&interval=daily`)
+      console.log(response.data)
+      return response.data
+      
+    }
+    catch(error) {
+      console.log(error)
+    }
+  }
+  const graphQuery = useQuery(["graph", name], fetchGraphh);
 
   if (graphQuery.isLoading) {
     return (
@@ -51,7 +52,7 @@ export const Board = ({ name , fullColor , halfColor }: CoinProps) => {
       <p>Error. Please reload</p>
     </div>
     )
-
+    
   //Taking out market cap & decimals from prices
     const chartData: number[] = graphQuery.data.prices.map((price: number[]) =>
       price.shift()?.toFixed(2)

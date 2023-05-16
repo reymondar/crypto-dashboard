@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Dashboard } from "@/Components/dashboard/Dashboard";
 import style from "../styles/home.module.scss"
+
 export default function Home() {
   const queryClient = new QueryClient();
 
