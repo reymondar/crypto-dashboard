@@ -30,7 +30,6 @@ export const Board = ({ name , fullColor , halfColor }: CoinProps) => {
       const response = await axios.get(`coins/${name}/market_chart?vs_currency=usd&days=7&interval=daily`)
       console.log(response.data)
       return response.data
-      
     }
     catch(error) {
       console.log(error)

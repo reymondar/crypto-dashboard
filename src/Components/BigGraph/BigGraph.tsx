@@ -84,7 +84,7 @@ export const BigGraph = () => {
 
     const fetchCoin = async () => {
         try {
-          const response = await axios.get(`coins/${coin.id}/market_chart?vs_currency=usd&days=364&interval=30`)
+          const response = await axios.get(`coins/${coin.id}/market_chart?vs_currency=usd&days=364&interval=daily`)
           console.log(response.data)
           return response.data
           
@@ -111,7 +111,6 @@ export const BigGraph = () => {
 
     if(isLoading) return <div className={style.container}><Loader /></div>
 
-    
     const { prices } = data
 
     
