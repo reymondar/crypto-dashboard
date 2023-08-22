@@ -8,6 +8,7 @@ import {
   Filler,
   ScriptableContext,
 } from "chart.js";
+import { useEffect } from "react";
 import { Line } from "react-chartjs-2";
 type graphProps = {
   price: number[],
@@ -44,7 +45,6 @@ export const LineChart = ({ price , fullColor , halfColor }: graphProps) => {
     Tooltip,
     Filler
   );
-
 
   //Falta una funcion para que los dias esten dinamicamente
   const labels = week

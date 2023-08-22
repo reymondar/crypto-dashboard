@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext , useEffect, useState } from "react";
 import { coinContext } from "../dashboard/Dashboard";
 import { useQuery } from "react-query";
 import { LineChart } from "../Charts/LineChart";
@@ -28,16 +28,16 @@ export const Board = ({ name , fullColor , halfColor }: CoinProps) => {
   const fetchGraphh = async () => {
     try {
       const response = await axios.get(`coins/${name}/market_chart?vs_currency=usd&days=7&interval=daily`)
-      console.log(response.data)
+      
       return response.data
     }
     catch(error) {
       console.log(error)
     }
   }
-  const graphQuery = useQuery(["graph", name], fetchGraphh);
+  const { data , isLoading , isError} = useQuery(["graph", name], fetchGraphh);
 
-  if (graphQuery.isLoading) {
+  if (isLoading) {
     return (
       <div className={styles.container}>
         <Loader />
@@ -45,7 +45,7 @@ export const Board = ({ name , fullColor , halfColor }: CoinProps) => {
     );
   }
 
-  if (graphQuery.isError)
+  if (isError)
     return (
     <div className={styles.container}>
       <p>Error. Please reload</p>
@@ -53,10 +53,10 @@ export const Board = ({ name , fullColor , halfColor }: CoinProps) => {
     )
     
   //Taking out market cap & decimals from prices
-    const chartData: number[] = graphQuery.data.prices.map((price: number[]) =>
-      price.shift()?.toFixed(2)
-    );
+    const chartData: number[] = data.prices.map((price: number[]) => price.shift()?.toFixed(2));
 
+    console.log(chartData)
+    
     const {
       image,
       symbol,
@@ -70,7 +70,7 @@ export const Board = ({ name , fullColor , halfColor }: CoinProps) => {
     } = coinData
 
     const percentage = Number(price_change_percentage_24h);
-
+  
     return (
       <div className={styles.container}>
         <div className={styles.header}>
